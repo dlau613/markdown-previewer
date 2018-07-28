@@ -2,7 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 import Icon from '../icon';
 
-const Wrapper = styled.div`
+export const TOOLBAR_HEIGHT = '50px';
+const Wrapper = styled.div.attrs({
+    height: TOOLBAR_HEIGHT
+})`
     color: red;
     display: flex;
     flex-direction: row;
@@ -10,7 +13,7 @@ const Wrapper = styled.div`
     justify-content: space-between;
     background: blue;
     width: 100%;
-    height: 30px;
+    height: ${props => props.height};
 `;
 
 const LeftWrapper = styled.div`

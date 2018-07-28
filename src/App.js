@@ -1,20 +1,21 @@
 import React, { Component } from 'react';
 import {Provider} from 'redux';
 import styled, {ThemeProvider, injectGlobal} from 'styled-components';
-
+import SplitPane from 'react-split-pane';
+import Dimensions from 'react-dimensions';
 import './App.css';
 
 import EditorWindow from './components/editorWindow';
 
-// injectGlobal`
-//   html {
-//     overflow: hidden;
-//   },
-//   // body {
-//   //   height: 100%;
-//   //   width: 100%;
-//   // }
-// `;
+injectGlobal`
+  html {
+    overflow: hidden;
+  },
+  // body {
+  //   height: 100%;
+  //   width: 100%;
+  // }
+`;
 const theme = {
   colors: {
       primary: '#16a085',
@@ -43,10 +44,10 @@ class App extends Component {
   render() {
     return (
       <ThemeProvider theme={theme}>
-        <Wrapper>
-          <EditorWindow text={placeholder} title='Editor' icon={{set:'fa',symbol:'twitter'}}/>
-          <EditorWindow preview text={placeholder} title='Editor' icon={{set:'fa',symbol:'twitter'}}/>
-        </Wrapper>
+          <SplitPane split='vertical' minSize={100} maxSize={this.props.containerWidth/2}>
+            <EditorWindow text={placeholder} title='Editor' icon={{set:'fa',symbol:'twitter'}}/> 
+            <EditorWindow preview text={placeholder} title='Previewer' icon={{set:'fa',symbol:'twitter'}}/>
+          </SplitPane>
       </ThemeProvider>
     );
   }
@@ -97,4 +98,4 @@ Read usage information and more on [GitHub](//github.com/rexxars/react-markdown)
 
 A component by [VaffelNinja](http://vaffel.ninja) / Espen Hovlandsdal`
 
-export default App;
+export default Dimensions()(App);
