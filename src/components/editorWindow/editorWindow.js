@@ -13,9 +13,9 @@ const Wrapper = styled.div`
 `;
 
 const MarkdownWrapper = styled.div.attrs({
-    toolbarHeight: TOOLBAR_HEIGHT
+    toolbarheight: TOOLBAR_HEIGHT
 })`
-    height: calc(100% - ${props => props.toolbarHeight});
+    height: calc(100% - ${props => props.toolbarheight});
     overflow: auto;
 `;
 
@@ -26,7 +26,7 @@ const EditorWindow = (props) => {
             <Wrapper>
                 <Toolbar title={props.title} icon={props.icon}/>
                 <MarkdownWrapper>
-                    <Markdown source={props.text} escapeHtml={false}/>
+                    <Markdown source={props.text} escapeHtml={false} sourcePos={true}/>
                 </MarkdownWrapper>
             </Wrapper>
         );
@@ -34,7 +34,7 @@ const EditorWindow = (props) => {
     return (
         <Wrapper>
             <Toolbar title={props.title} icon={props.icon}/>
-            <EditorBody text={props.text}/>
+            <EditorBody onChange={props.onChange} text={props.text}/>
         </Wrapper>
             
 

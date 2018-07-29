@@ -1,10 +1,15 @@
 import React, { Component } from 'react';
-import {Provider} from 'redux';
+import { createStore } from 'redux';
+import { Provider, connect } from 'react-redux';
+
 import styled, {ThemeProvider, injectGlobal} from 'styled-components';
 import SplitPane from 'react-split-pane';
 import Dimensions from 'react-dimensions';
-import './App.css';
 
+
+import './App.css';
+import rootReducer from './reducers';
+import { updateInput } from './actions';
 import EditorWindow from './components/editorWindow';
 
 injectGlobal`
@@ -40,18 +45,50 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction:row;
 `;
-class App extends Component {
+
+const store = createStore(rootReducer);
+class Presentational extends Component {
+  constructor(props) {
+    super(props);
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange(e) {
+    this.props.updateInput(e.target.value);
+  }
   render() {
+    console.log(this.props);
     return (
       <ThemeProvider theme={theme}>
           <SplitPane split='vertical' minSize={100} maxSize={this.props.containerWidth/2}>
-            <EditorWindow text={placeholder} title='Editor' icon={{set:'fa',symbol:'twitter'}}/> 
-            <EditorWindow preview text={placeholder} title='Previewer' icon={{set:'fa',symbol:'twitter'}}/>
+            <EditorWindow onChange={this.handleChange} text={this.props.input} title='Editor' icon={{set:'fa',symbol:'twitter'}}/> 
+            <EditorWindow preview text={this.props.input} title='Previewer' icon={{set:'fa',symbol:'twitter'}}/>
           </SplitPane>
       </ThemeProvider>
     );
   }
-}
+};
+const mapStateToProps = (state) => {
+  return {
+    input: state.input
+  };
+};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    updateInput: (input) => dispatch(updateInput(input))
+  };
+};
+const Container = connect(mapStateToProps,mapDispatchToProps)(Dimensions()(Presentational));
+class App extends Component {
+  render() {
+    return (
+        <Provider store={store}>
+          <Container/>
+        </Provider>
+    );
+  }
+};
+
 
 const placeholder = 
 `# Live demo
@@ -98,4 +135,4 @@ Read usage information and more on [GitHub](//github.com/rexxars/react-markdown)
 
 A component by [VaffelNinja](http://vaffel.ninja) / Espen Hovlandsdal`
 
-export default Dimensions()(App);
+export default App;
