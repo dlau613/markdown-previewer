@@ -10,6 +10,7 @@ import Dimensions from 'react-dimensions';
 import './App.css';
 import rootReducer from './reducers';
 import { updateInput } from './actions';
+import { getInput } from './reducers';
 import EditorWindow from './components/editorWindow';
 
 injectGlobal`
@@ -58,9 +59,10 @@ class Presentational extends Component {
   }
   render() {
     console.log(this.props);
+    let halfWidth = this.props.containerWidth/2;
     return (
       <ThemeProvider theme={theme}>
-          <SplitPane split='vertical' minSize={100} maxSize={this.props.containerWidth/2}>
+          <SplitPane split='vertical' defaultSize={halfWidth} minSize={100} maxSize={halfWidth}>
             <EditorWindow onChange={this.handleChange} text={this.props.input} title='Editor' icon={{set:'fa',symbol:'twitter'}}/> 
             <EditorWindow preview text={this.props.input} title='Previewer' icon={{set:'fa',symbol:'twitter'}}/>
           </SplitPane>
@@ -70,7 +72,7 @@ class Presentational extends Component {
 };
 const mapStateToProps = (state) => {
   return {
-    input: state.input
+    input: getInput(state)
   };
 };
 const mapDispatchToProps = (dispatch) => {
@@ -88,51 +90,5 @@ class App extends Component {
     );
   }
 };
-
-
-const placeholder = 
-`# Live demo
-
-Changes are automatically rendered as you type.
-
-* Implements [GitHub Flavored Markdown](https://github.github.com/gfm/)
-* Renders actual, "native" React DOM elements
-* Allows you to escape or skip HTML (try toggling the checkboxes above)
-* If you escape or skip the HTML, no \`dangerouslySetInnerHTML\` is used! Yay!
-
-## HTML block below
-
-<blockquote>
-  This blockquote will change based on the HTML settings above.
-</blockquote>
-
-## How about some code?
-\`\`\`js
-var React = require('react');
-var Markdown = require('react-markdown');
-
-React.render(
-  <Markdown source="# Your markdown here" />,
-  document.getElementById('content')
-);
-\`\`\`
-
-Pretty neat, eh?
-
-## Tables?
-
-| Feature | Support |
-| ------ | ----------- |
-| tables | ✔ |
-| alignment | ✔ |
-| wewt | ✔ |
-
-## More info?
-
-Read usage information and more on [GitHub](//github.com/rexxars/react-markdown)
-
----------------
-
-A component by [VaffelNinja](http://vaffel.ninja) / Espen Hovlandsdal`
 
 export default App;
