@@ -1,11 +1,18 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, {injectGlobal} from 'styled-components';
 import Markdown from 'react-markdown';
-
+import {Controlled as CodeMirror} from 'react-codemirror2';
 
 import Toolbar from '../toolbar';
 import EditorBody from '../editorBody';
 import {TOOLBAR_HEIGHT} from '../toolbar/toolbar';
+require('codemirror/lib/codemirror.css');
+require('codemirror/theme/material.css');
+require('codemirror/theme/monokai.css');
+require('codemirror/mode/javascript/javascript.js');
+require('codemirror/mode/markdown/markdown.js');
+
+
 const Wrapper = styled.div`
     width: 100%;
     height: 100%;
@@ -18,6 +25,7 @@ const MarkdownWrapper = styled.div.attrs({
     height: calc(100% - ${props => props.toolbarheight});
     overflow: auto;
 `;
+
 
 
 const EditorWindow = (props) => {
@@ -34,7 +42,21 @@ const EditorWindow = (props) => {
     return (
         <Wrapper>
             <Toolbar title={props.title} icon={props.icon}/>
-            <EditorBody onChange={props.onChange} text={props.text}/>
+            <MarkdownWrapper>
+
+                <CodeMirror 
+                    value={props.text} 
+                    options={{
+                        mode: 'markdown',
+                        theme: 'monokai',
+                    }}
+                    onBeforeChange={(editor, data, value) => {
+                        props.onChange(value)
+                    }}
+                    onChange={(editor, data, value) => {
+                    }}
+                />
+            </MarkdownWrapper>
         </Wrapper>
             
 

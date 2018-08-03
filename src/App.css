@@ -27,6 +27,11 @@
   to { transform: rotate(360deg); }
 }
 
+
+
+.CodeMirror {
+  height: 100% !important;
+}
 blockquote {
   color: #666;
   margin: 0;

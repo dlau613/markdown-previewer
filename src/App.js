@@ -17,6 +17,9 @@ injectGlobal`
   html {
     overflow: hidden;
   },
+  // CodeMirror {
+  //   height: 100%;
+  // }
   // body {
   //   height: 100%;
   //   width: 100%;
@@ -40,22 +43,23 @@ const theme = {
   transitionTime: '1s',
 }
 
-const Wrapper = styled.div`
-  height: 100vh;
-  width: 100vw;
-  display: flex;
-  flex-direction:row;
-`;
+// const Wrapper = styled.div`
+//   height: 100vh;
+//   width: 100vw;
+//   display: flex;
+//   flex-direction:row;
+// `;
 
 const store = createStore(rootReducer);
+
 class Presentational extends Component {
   constructor(props) {
     super(props);
     this.handleChange = this.handleChange.bind(this);
   }
 
-  handleChange(e) {
-    this.props.updateInput(e.target.value);
+  handleChange(value) {
+    this.props.updateInput(value);
   }
   render() {
     console.log(this.props);
