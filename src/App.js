@@ -31,7 +31,12 @@ const theme = {
       secondary: 'white',
   },
   margins: {
+      xs: '5px',
       sm: '10px',
+  },
+  padding: {
+    xs: '5px',
+    sm: '10px',
   },
   fontSize: {
       h1: '48px',
@@ -67,8 +72,8 @@ class Presentational extends Component {
     return (
       <ThemeProvider theme={theme}>
           <SplitPane split='vertical' defaultSize={halfWidth} minSize={100} maxSize={halfWidth}>
-            <EditorWindow onChange={this.handleChange} text={this.props.input} title='Editor' icon={{set:'fa',symbol:'twitter'}}/> 
-            <EditorWindow preview text={this.props.input} title='Previewer' icon={{set:'fa',symbol:'twitter'}}/>
+            <EditorWindow onChange={this.handleChange} text={this.props.input} title='Editor' icon={{set:'fa',symbol:'code'}}/> 
+            <EditorWindow preview text={this.props.input} title='Previewer' icon={{set:'fa',symbol:'eye'}}/>
           </SplitPane>
       </ThemeProvider>
     );
